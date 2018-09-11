@@ -38,10 +38,6 @@
   color: red;
 }
 
-.optionTab {
-  text-align: center;
-}
-
 .has-error {
   border-bottom-color: #ea7575;
   /*border-bottom-width: 1.5px;*/
@@ -210,4 +206,26 @@ i.large.icon.delete-icon{
 
 .ck-error{
   border: 1px solid red;
+}
+/*this class generate dynamic onfocus ckeditor show z-index required beacuse some element overlapping*/
+.cke_float {
+  z-index: 9999999 !important;
+}
+.option-text {
+  text-align: center;
+  border: none;
+  border-bottom: 1px solid #d8d8d8;
+}
+/*Its adding placeholder in text box option*/
+.option-placeholder::before{
+ content: 'Enter answer';
+ color: #aaa;
+ display: block;
+ position: absolute;
+ left: 45%;
+}
+.qc-media-section{
+  padding-top: 0rem;
+  padding-bottom: 0rem;
+  width: 100%!important;
 }
