@@ -46,22 +46,19 @@
               <span>Set answer</span>
             </div>
             <div ng-repeat="(key, value) in mcqFormData.options" class="outer-segment">
-              <div class="ui segments inner-segment" ng-class="{cardBorder: focused, 'has-errorCard': submitted && mcqForm['options_' + $index].$error.required}"
-                id="eachCard">
+              <div class="ui segments inner-segment option-box" ng-class="{cardBorder: focused, 'has-errorCard': submitted && mcqForm['mcqoptions_' + $index].$error.required}" id="option-box-{{$index}}">
                 <div class="ui segment">
                   <div class="ui grid">
-                    <div class="eleven wide column">
-                      <div class="form-group segment textBoxDiv">
-                        <input type="text" class="form-control textbox" ng-class="{'has-success':mcqForm['options_' + $index].$valid, 'has-error': submitted && mcqForm['options_' + $index].$error.required}" placeholder="Enter answer" name="options_{{$index}}" ng-model="mcqFormData.options[key].text" maxlength="1000" ng-init="focused = false" ng-focus="focused = true;generateTelemetry({type: 'TOUCH', id: 'input', target: {id: 'questionunit-mcq-answer', ver: '', type: 'input'}})" ng-blur="focused = false" ng-required="!(mcqFormData.options[key].text.length || mcqFormData.options[key].image.length || mcqFormData.options[key].audio.length)"/>
+                    <div class="one column row">
+                      <div class="form-group one column row">
+                        <div class="form-control contenteditable option-text" ng-class="{'has-success':mcqForm['mcqoptions_' + $index].$valid, 'has-error': submitted && mcqForm['mcqoptions_' + $index].$error.required,'option-placeholder':mcqFormData.options[$index].text.length==0}" ng-required="!(mcqFormData.options[key].text.length || mcqFormData.options[key].image.length || mcqFormData.options[key].audio.length)" name="mcqoptions_{{$index}}" id="mcqoptions_" ng-model="mcqFormData.options[key].text" ng-init="bindCkEditor($index)" contenteditable="true"></div>
                       </div>
-                    </div>
-                    <div class="one wide column text-len">
-                      <span class="maxLengthText">{{value.text.length}}<span class="length-divider">/</span>1000</span>
-                    </div>
-                    <div class="twelve wide column">
+                       </div>
+                       <div class="qc-media-section">
                       <selected-media-container media-callbacks="callbacks" class="row" formdata="mcqFormData.options[key]" media-type='op' media-index='{{key}}'></selected-media-container>
                     </div>
-                  </div>
+                   
+
                 </div>
                 <div class="ui secondary segment custom-sec-segment">
                   <div class="ui grid">
@@ -94,6 +91,8 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
           </form>
           <span class="has-success-text" ng-show="mcqFormData.options.length<2">Minimum two answer will be required</span>
           <div class="one column row">
