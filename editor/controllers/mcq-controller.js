@@ -58,19 +58,39 @@ angular.module('mcqApp', ['org.ekstep.question'])
     };
     $scope.mcqFormData.media = [];
     $scope.editMedia = [];
-    var questionInput = CKEDITOR.replace('ckedit', {// eslint-disable-line no-undef
-      customConfig: ecEditor.resolvePluginResource('org.ekstep.questionunit', '1.0', "editor/ckeditor-config.js"),
-      skin: 'moono-lisa,' + CKEDITOR.basePath + "skins/moono-lisa/",// eslint-disable-line no-undef
-      contentsCss: CKEDITOR.basePath + "contents.css"// eslint-disable-line no-undef
-    });
+    //get questionunit manifest
+    var questionUnitIns = org.ekstep.pluginframework.pluginManager.getPluginManifest("org.ekstep.questionunit");
+    $scope.ckConfig = { // eslint-disable-line no-undef
+      customConfig: ecEditor.resolvePluginResource(questionUnitIns.id, questionUnitIns.ver, "editor/ckeditor-config.js"),
+      skin: 'moono-lisa,' + CKEDITOR.basePath + "skins/moono-lisa/", // eslint-disable-line no-undef
+      contentsCss: CKEDITOR.basePath + "contents.css" // eslint-disable-line no-undef
+    };
+    var questionInput = CKEDITOR.replace('ckedit', $scope.ckConfig);
     questionInput.on('change', function () {
       $scope.mcqFormData.question.text = this.getData();
     });
     questionInput.on('focus', function () {
-      $scope.generateTelemetry({ type: 'TOUCH', id: 'input', pageid: 'question-creation-mcq-form', target: { id: 'questionunit-mcq-question', ver: '', type: 'input' } })
+      $scope.generateTelemetry({
+        type: 'TOUCH',
+        id: 'input',
+        pageid: 'question-creation-mcq-form',
+        target: {
+          id: 'questionunit-mcq-question',
+          ver: '',
+          type: 'input'
+        }
+      })
     });
     angular.element('.innerScroll').on('scroll', function () {
-      $scope.generateTelemetry({ type: 'SCROLL', id: 'form', target: { id: 'questionunit-mcq-form', ver: '', type: 'form' } })
+      $scope.generateTelemetry({
+        type: 'SCROLL',
+        id: 'form',
+        target: {
+          id: 'questionunit-mcq-form',
+          ver: '',
+          type: 'form'
+        }
+      })
     });
     $scope.init = function () {
       $scope.mcqPluginInstance = org.ekstep.pluginframework.pluginManager.getPluginManifest("org.ekstep.questionunit.mcq")
@@ -209,7 +229,15 @@ angular.module('mcqApp', ['org.ekstep.question'])
       }
       //Defining the callback function of mediaObject before invoking asset browser
       mediaObject.callback = function (data) {
-        var telemetryObject = { type: 'TOUCH', id: 'button', target: { id: '', ver: '', type: 'button' } };
+        var telemetryObject = {
+          type: 'TOUCH',
+          id: 'button',
+          target: {
+            id: '',
+            ver: '',
+            type: 'button'
+          }
+        };
         var media = {
           "id": Math.floor(Math.random() * 1000000000), // Unique identifier
           "src": org.ekstep.contenteditor.mediaManager.getMediaOriginURL(data.assetMedia.src), // Media URL
@@ -230,7 +258,7 @@ angular.module('mcqApp', ['org.ekstep.question'])
           $scope.optionsMedia[mediaType][index] = media;
         }
         $scope.generateTelemetry(telemetryObject)
-        if(!$scope.$$phase) {
+        if (!$scope.$$phase) {
           $scope.$digest()
         }
       }
@@ -244,7 +272,15 @@ angular.module('mcqApp', ['org.ekstep.question'])
      * @param {string} mediaType 
      */
     $scope.deleteMedia = function (type, index, mediaType) {
-      var telemetryObject = { type: 'TOUCH', id: 'button', target: { id: '', ver: '', type: 'button' } };
+      var telemetryObject = {
+        type: 'TOUCH',
+        id: 'button',
+        target: {
+          id: '',
+          ver: '',
+          type: 'button'
+        }
+      };
       if (type == 'q') {
         $scope.mcqFormData.question[mediaType] = '';
         delete $scope.questionMedia[mediaType];
@@ -294,6 +330,32 @@ angular.module('mcqApp', ['org.ekstep.question'])
       addMedia: $scope.addMedia,
       qtype: 'mcq'
     }
-
+    /**
+     * bind ckeditor in all option
+     */
+    $scope.bindCkEditor = function (index) {
+      //replace id with option count
+      $("#mcqoptions_").prop("id", "mcqoptions_" + index);
+      //remove ckeditor instance if already exist
+      $("#cke_mcqoptions_" + index).remove();
+      //remove tooltip
+      $scope.ckConfig.title = "Set Answer";
+      var optionInput = CKEDITOR.inline("mcqoptions_" + index, $scope.ckConfig);
+      //assign value to input box
+      CKEDITOR.instances['mcqoptions_' + index].setData($scope.mcqFormData.options[index].text);
+      optionInput.on('change', function () {
+        //on changes get index id and assign to model
+        var id = parseInt(this.name.split("mcqoptions_")[1]);
+        $scope.mcqFormData.options[id].text = CKEDITOR.instances[this.name].getData();
+        $scope.$safeApply();
+      });
+      optionInput.on('blur', function () {
+        ecEditor.jQuery('.cke_float').hide();
+      });
+      $(".innerScroll").scroll(function () {
+        ecEditor.jQuery('.cke_float').hide();
+      });
+      optionInput.focus();
+    }
   }]);
 //# sourceURL=horizontalMCQ.js
