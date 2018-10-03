@@ -15,7 +15,7 @@
     "targets": [
         {
             "id": "org.ekstep.questionset",
-            "ver": 1.1
+            "ver": 1.0
         }
     ],
     "editor": {
@@ -24,7 +24,7 @@
             {
                 "type": "plugin",
                 "plugin": "org.ekstep.questionunit",
-                "ver": "1.1"
+                "ver": "1.0"
             },
             {
                 "type": "js",
@@ -75,7 +75,7 @@
     "dependencies": [
         {
             "plugin": "org.ekstep.questionunit",
-            "ver": "1.1",
+            "ver": "1.0",
             "type": "plugin",
             "scope": "all"
         }

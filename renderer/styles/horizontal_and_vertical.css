@@ -8,7 +8,7 @@
 
 .mcq-content-container .question-content-container {
     height: 23.33333vh;
-    font-size: 3.9vh;
+    font-size: 14px;
     line-height: 6.7vh;
 }
 
@@ -18,7 +18,6 @@
     position: relative;
     display: table;
 }
-
 .mcq-content-container .outer-option-container.vertical {
     height: 77.5%;
     width: 78.2%;
@@ -70,7 +69,7 @@
     height: 75%;
     width: 100%;
     position: relative;
-    border-radius: 4px;
+    border-radius:4px;
 }
 
 .mcq-content-container .option-container.vertical .option-block-container .option-block .option-image-container img {
@@ -104,7 +103,7 @@
 }
 
 .mcq-content-container .option-container.vertical .option-block-container .option-block .option-text-container {
-    overflow: hidden;
+    overflow:hidden;
     height: 25%;
     width: 100%;
     position: relative;
@@ -134,7 +133,6 @@
     position: relative;
     display: table;
 }
-
 .mcq-content-container .outer-option-container.horizontal {
     padding-top: 2.5%;
     margin-right: 10.40%;
@@ -145,11 +143,27 @@
     padding-bottom: 2.5%;
 }
 
+.mcq-content-container .outer-option-container.horizontal::-webkit-scrollbar {
+    width: 0.5em;
+}
+.mcq-content-container .outer-option-container.horizontal::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.mcq-content-container .outer-option-container.horizontal::-webkit-scrollbar-thumb {
+    background-color: #65A0E6;
+    outline: 1px solid slategrey;
+    border: 0.3em;
+    height: 75%;
+    width: 75%;
+}
+
 .mcq-content-container .option-container.horizontal .option-block-container {
     justify-content: center;
     display: table-cell;
     align-items: center;
     vertical-align: middle;
+    padding-right: 5px;
 }
 
 .mcq-content-container .option-container.horizontal .option-block-container .option-block {
@@ -161,7 +175,7 @@
     background-color: #FFFFFF;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
     position: relative;
-    overflow: hidden;
+    display: table;
 }
 
 .mcq-content-container .option-container.horizontal .option-block-container .option-block.selected {
@@ -179,9 +193,10 @@
 
 .mcq-content-container .option-container.horizontal .option-block-container .option-block .option-image-container {
     height: 100%;
-    width: 11.5%;
+    width: 10vw;
     float: left;
     position: relative;
+    display: table-cell;    
 }
 
 .mcq-content-container .option-container.horizontal .option-block-container .option-block .option-image-container.no-image {
@@ -219,6 +234,9 @@
     width: 100%;
     height: 100%;
     position: relative;
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 5%;
 }
 
 .mcq-content-container .option-container.horizontal .option-block-container .option-block .option-text-container.with-image {
@@ -237,13 +255,13 @@
 }
 
 .mcq-content-container .option-container.horizontal .option-block-container .option-block .option-text-container>span {
-    position: absolute;
+    height: auto;
+    position: relative;
     top: 0;
     bottom: 0;
-    left: 5%;
-    right: 2%;
-    display: flex;
+    display: table-cell;
     align-items: center;
+    vertical-align: middle;
 }
 
 .mcq-content-container .option-container.horizontal .option-block:last-child {

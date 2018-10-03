@@ -8,12 +8,12 @@ MCQController.layout = MCQController.layout || {
      * called just before the layout's `getTemplate()` is called. This can be
      * used to perform any initializations on the layout object
      */
-    preRender: function (question) {},
+    preRender: function (question) { },
     /**
      * returns the html template for the layout
      * @param {object} question the question object
      */
-    getTemplate: function (question) {},
+    getTemplate: function (question) { },
     /**
      * called when the option is selected
      * @param {object} event the mouse click or touch event
@@ -26,7 +26,7 @@ MCQController.layout = MCQController.layout || {
      * called after the DOM is initialized with the layout html
      * @param {object} question the question object
      */
-    postRender: function (question) {}
+    postRender: function (question) { }
 }
 
 /* ** Grid ** */
@@ -116,7 +116,7 @@ MCQController.grid.getOptionsForRow = function (optIndices, i, options) {
         opts = "";
     if (i == 0)
         rowOpts = optIndices.length > 4 ? _.take(optIndices, Math.round((optIndices.length * 1.0) / 2)) :
-        _.take(optIndices, optIndices.length);
+            _.take(optIndices, optIndices.length);
     else {
         var remainingOptions = optIndices.length - Math.round((optIndices.length * 1.0) / 2);
         rowOpts = _.last(optIndices, remainingOptions);
@@ -315,9 +315,9 @@ MCQController.vertical2.getOptionsTemplate = function (options) {
     _.each(options, function (val, key, index) {
         opts += MCQController.vertical2.getOption(val, key);
     });
-    return "<div class='mcq-2-options-container-vertical'>" +
+    return "<div class='mcq-2-options-outer-container-vertical'><div class='mcq-2-options-container-vertical'><div class='mcq-2-options-block-container-vertical'>" +
         opts +
-        "</div>\
+        "</div></div>\
 ";
 }
 
@@ -330,18 +330,16 @@ MCQController.vertical2.getOption = function (option, key) {
     var keyConst = 0;
     if (key > 0) keyConst = 2
     else keyConst = 1
-    var optTemplate = "<div class='text-option option-background text-option-<%=keyConst%>' onClick=MCQController.vertical2.onOptionSelected(event,<%= key %>)>\
+    var optTemplate = "<div class='text-option option-background' onClick=MCQController.vertical2.onOptionSelected(event,<%= key %>)>\
     <div class='audio-option-image-container'>\
     <% if ( option.audio.length > 0 ){ %> \
     <img class='audio-option-image'    src=<%= MCQController.pluginInstance.getDefaultAsset('audio-icon2.png')%> onclick=MCQController.pluginInstance.playAudio({src:'<%= option.audio %>'}) />\
     <% } %> \
     </div>\
     <div class='text-content'>\
-    <div class='text-content-outer'>\
-    <div class='text-content-inner'>\
+    <span>\
     <%= option.text %>\
-    </div>\
-    </div>\
+    <span>\
     </div>\
     <div class='tick-icon-holder'>\
     <img src=<%= MCQController.pluginInstance.getDefaultAsset('tick_icon.png') %> style='height: 100%;'>\
@@ -373,7 +371,7 @@ MCQController.vertical2.adjustOptions = function (question) {
  */
 MCQController.vertical2.postRender = function (question) {
     if (question.data.options.length < 4) {
-        MCQController.vertical2.adjustOptions(question);
+        // MCQController.vertical2.adjustOptions(question);
     }
 }
 
