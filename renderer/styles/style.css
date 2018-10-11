@@ -1056,7 +1056,7 @@ span.qc-option-txt {
 .mcq-qLeft-content-container {
     left: 10%;
     top: 5%;
-    width: 79.37%;
+    width: 81.37%;
     height: 78.04%;
     position: absolute;
 }
@@ -1200,7 +1200,6 @@ span.qc-option-txt {
     width: 54.731%;
 }
 .mcq-2-options-outer-container-vertical {
-    margin-left: 46.063%;
     height: 100%;
     position: relative;
     overflow: auto;
@@ -1233,7 +1232,11 @@ span.qc-option-txt {
     height: 75%;
     width: 75%;
 }
-
+.mcq-2-options-container-vertical .outer-option-block {
+    display: table;
+    width: 100%;
+    margin-bottom: 2vh;
+}
 .mcq-2-options-container-vertical .text-option {
     cursor: pointer;
     height: 15vh;
@@ -1277,13 +1280,13 @@ span.qc-option-txt {
 .mcq-2-options-container-vertical .text-content {
     width: 90.29%;
     height: 67.15%;
-    top: 11.21%;
+    padding-top:0.5vw;
     position: relative;
     font-size: 14px;
     display: table-cell;
     vertical-align: middle;
-    padding-left: 2vw;
-    padding-bottom: 2vw;
+    padding-left: 3vw;
+    padding-bottom: 0.5vw;
 }
 
 .mcq-2-options-container-vertical .text-content-outer {
@@ -1306,24 +1309,26 @@ span.qc-option-txt {
 }
 
 .mcq-2-options-container-vertical .audio-option-image {
-    height: 40%;
-    top: 32%;
-    left: -34%;
-    position: relative;
-    z-index: 10;
+    height: 100%;
 }
 
 .mcq-2-options-container-vertical .audio-option-image-container {
-    width: 11.51%;
-    height: 100%;
-    float: left;
+    width: 5vw;
+    height: 8vh;
+    display: table-cell;
+    top:0.5vh;
+    vertical-align: middle;
+    position: relative;
+    z-index: 2;
+    left: 3vw;
 }
 
 .mcq-2-options-container-vertical .tick-icon-holder {
     position: relative;
-    height: 7vh;
+    height: 8vh;
     display: table-cell;
     vertical-align: middle;
+    top:1.5vh;
 }
 
 .text-option .tick-icon-holder>img {

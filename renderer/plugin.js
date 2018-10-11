@@ -16,7 +16,7 @@ org.ekstep.questionunitmcq.RendererPlugin = org.ekstep.contentrenderer.questionU
     gridLayout: "Grid",
     mcqParentDiv: "#qs-mcq-template",
     mcqSelectOption: ".mcq-option-value",
-    optionSelectionUI: "qsselectedopt"
+    optionSelectionUI: "qsselectedopt",
   },
   _defaultImageIcon: "default-image.png",
   _defaultAudioIcon: "audio.png",
@@ -34,8 +34,12 @@ org.ekstep.questionunitmcq.RendererPlugin = org.ekstep.contentrenderer.questionU
    */
   preQuestionShow: function (event) {
     this._super(event);
-    if (this._question.config.isShuffleOption) {
-      this._question.data.options = _.shuffle(this._question.data.options);
+    if (this._question.state && _.has(this._question.state, 'val')) {
+      this._question.data.options = this._question.state.options;
+    }else{
+      if (this._question.config.isShuffleOption) {
+        this._question.data.options = _.shuffle(this._question.data.options);
+      }
     }
   },
   /**
@@ -48,10 +52,13 @@ org.ekstep.questionunitmcq.RendererPlugin = org.ekstep.contentrenderer.questionU
     MCQController.renderQuestion(); // eslint-disable-line no-undef
     if (this._question.state && _.has(this._question.state, 'val')) {
       this._selectedIndex = this._question.state.val;
-      $("input[name='radio']", $(this._constant.mcqParentDiv))[this._selectedIndex].checked = true; // eslint-disable-line no-undef
-      if (this._question.config.layout == "Horizontal") {
-        $($("input[name='radio']")[this._selectedIndex]).parents('.option').addClass('selected');
-      }
+      var selectedIndex = this._selectedIndex;
+      var layout = this._question.config.layout;
+      _.each($(".org-ekstep-questionunit-mcq-option-element"), function(optionElement, index){
+        if(index == selectedIndex){
+          MCQController[layout.toLowerCase()].optionStyleUponClick(optionElement);
+        }
+      })
     } else {
       this._selectedIndex = undefined;
     }
@@ -85,6 +92,7 @@ org.ekstep.questionunitmcq.RendererPlugin = org.ekstep.contentrenderer.questionU
     if (_.isFunction(callback)) {
       callback(result);
     }
+    EkstepRendererAPI.dispatchEvent('org.ekstep.questionset:saveQuestionState', result.state);
     QSTelemetryLogger.logEvent(QSTelemetryLogger.EVENT_TYPES.ASSESSEND, result); // eslint-disable-line no-undef
   },
   /**
@@ -124,25 +132,14 @@ org.ekstep.questionunitmcq.RendererPlugin = org.ekstep.contentrenderer.questionU
    * @param {Integer} index from question set.
    */
   onOptionSelected: function (event, index) {
-    var state = {}, value, telValues = {};
+    var value, telValues = {};
     value = this._question.data.options[index];
     this._selectedIndex = index; // eslint-disable-line no-undef
-    state = {
-      val: this._selectedIndex, // eslint-disable-line no-undef
-      options: this._question.data.options, // eslint-disable-line no-undef
-      score: this._question.config.max_score // eslint-disable-line no-undef
-    };
     telValues['option' + index] = value.image.length > 0 ? value.image : value.text;
     QSTelemetryLogger.logEvent(QSTelemetryLogger.EVENT_TYPES.RESPONSE, { // eslint-disable-line no-undef
       "type": "MCQ",
       "values": [telValues]
     });
-    /**
-  * renderer:questionunit.mcq:save question set state.
-  * @event renderer:questionunit.mcq:dispatch
-  * @memberof org.ekstep.questionunit.mcq
-  */
-    EkstepRendererAPI.dispatchEvent('org.ekstep.questionset:saveQuestionState', state);
   },
 
   logTelemetryInteract: function (event) {

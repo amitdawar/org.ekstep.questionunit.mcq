@@ -184,11 +184,23 @@
 
 .mcq-content-container .option-container.horizontal .option-block-container .option-block img.audio {
     cursor: pointer;
-    position: relative;
-    max-height: 51%;
-    float: left;
-    top: 28%;
+    position: absolute;
+    top: 0%;
+    bottom: 0%;
     left: 1%;
+    margin: auto;
+    width: 6%;
+    z-index: 1;
+}
+.mcq-content-container .option-container.horizontal .option-block-container .option-block img.audio.with-image {
+    cursor: pointer;
+    position: absolute;
+    top: 0%;
+    bottom: 0%;
+    left: 14%;
+    margin: auto;
+    width: 6%;
+    z-index: 1;
 }
 
 .mcq-content-container .option-container.horizontal .option-block-container .option-block .option-image-container {
@@ -222,7 +234,7 @@
     bottom: 0%;
     right: 1%;
     margin: auto;
-    width: 5%;
+    width: 6%;
     z-index: 1;
 }
 
@@ -240,17 +252,15 @@
 }
 
 .mcq-content-container .option-container.horizontal .option-block-container .option-block .option-text-container.with-image {
-    width: 83%;
     margin-left: 10%;
 }
 
 .mcq-content-container .option-container.horizontal .option-block-container .option-block .option-text-container.with-audio {
-    width: 88%;
-    margin-left: 3%;
+    padding-left: 8%;
+    padding-right: 8%;
 }
 
 .mcq-content-container .option-container.horizontal .option-block-container .option-block .option-text-container.with-audio.with-image {
-    width: 76%;
     margin-left: 15%;
 }
 
