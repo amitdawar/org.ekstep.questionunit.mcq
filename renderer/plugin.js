@@ -92,8 +92,6 @@ org.ekstep.questionunitmcq.RendererPlugin = org.ekstep.contentrenderer.questionU
     if (_.isFunction(callback)) {
       callback(result);
     }
-    EkstepRendererAPI.dispatchEvent('org.ekstep.questionset:saveQuestionState', result.state);
-    QSTelemetryLogger.logEvent(QSTelemetryLogger.EVENT_TYPES.ASSESSEND, result); // eslint-disable-line no-undef
   },
   /**
    * provide media url to audio image
